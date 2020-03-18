@@ -11,6 +11,7 @@ class Company extends Model
 
 
 /*
+
 Company::all()
 Company::take(3)->get()
 Company::first()
@@ -20,6 +21,7 @@ Company::where('website', 'kreiger.net')->first()
 Company::whereWebsite('kreiger.net')->first()
 
 # create new record
+// by tinker 
 
 $company = new Company()
 $company->name = "My company"
