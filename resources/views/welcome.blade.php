@@ -81,13 +81,18 @@
 
             <div class="content">
                 <div class="title m-b-md">
-                    Laravel
+                    Udemy Project
+                    <br>
+                    <div class="links">
+                        <a href="https://github.com/AhmedQeshta/Udemy_Laravel_Project.git" target="_blank" style="border:1px solid ; padding: 10px">Project in github</a>
+                    </div>
                 </div>
 
                 <div class="links">
                     <a href="{{ route('contacts.index') }}">All contacts</a>
                     <a href="{{ route('contacts.create') }}">Add contact</a>
                     <a href="{{ route('contacts.show', 1) }}">Show a contact</a>
+                    
                 </div>
             </div>
         </div>
