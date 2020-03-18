@@ -1,67 +1,80 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>create Contact</title>
-       <!-- Styles -->
-       <style>
-        html, body {
-            background-color: #fff;
-            color: #636b6f;
-            font-family: 'Nunito', sans-serif;
-            font-weight: 200;
-            height: 100vh;
-            margin: 0;
-        }
+@extends('layouts.main')
 
-        .full-height {
-            height: 100vh;
-        }
+@section('content')
+<main class="py-5">
+    <div class="container">
+      <div class="row justify-content-md-center">
+        <div class="col-md-8">
+          <div class="card">
+            <div class="card-header card-title">
+              <strong>Add New Contact</strong>
+            </div>           
+            <div class="card-body">
+              <div class="row">
+                <div class="col-md-12">
+                  <div class="form-group row">
+                    <label for="first_name" class="col-md-3 col-form-label">First Name</label>
+                    <div class="col-md-9">
+                      <input type="text" name="first_name" id="first_name" class="form-control is-invalid">
+                      <div class="invalid-feedback">
+                        Please choose a username.
+                      </div>
+                    </div>
+                  </div>
 
-        .flex-center {
-            align-items: center;
-            display: flex;
-            justify-content: center;
-        }
+                  <div class="form-group row">
+                    <label for="last_name" class="col-md-3 col-form-label">Last Name</label>
+                    <div class="col-md-9">
+                      <input type="text" name="last_name" id="last_name" class="form-control">
+                    </div>
+                  </div>
 
-        .position-ref {
-            position: relative;
-        }
+                  <div class="form-group row">
+                    <label for="email" class="col-md-3 col-form-label">Email</label>
+                    <div class="col-md-9">
+                      <input type="text" name="email" id="email" class="form-control">
+                    </div>
+                  </div>
 
-        .top-right {
-            position: absolute;
-            right: 10px;
-            top: 18px;
-        }
+                  <div class="form-group row">
+                    <label for="phone" class="col-md-3 col-form-label">Phone</label>
+                    <div class="col-md-9">
+                      <input type="text" name="phone" id="phone" class="form-control">
+                    </div>
+                  </div>
 
-        .content {
-            text-align: center;
-        }
+                  <div class="form-group row">
+                    <label for="name" class="col-md-3 col-form-label">Address</label>
+                    <div class="col-md-9">
+                      <textarea name="address" id="address" rows="3" class="form-control"></textarea>
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <label for="company_id" class="col-md-3 col-form-label">Company</label>
+                    <div class="col-md-9">
+                      <select name="company_id" id="company_id" class="form-control">
+                        <option value="">Select Company</option>
+                        <option value="1">Company One</option>
+                        <option value="2">Company Two</option>
+                        <option value="3">Company Three</option>
+                      </select>
+                    </div>
+                  </div>
+                  <hr>
+                  <div class="form-group row mb-0">
+                    <div class="col-md-9 offset-md-3">
+                        <button type="submit" class="btn btn-primary">Save</button>
+                        <a href="{{ route('contacts.index') }}" class="btn btn-outline-secondary">Cancel</a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+</main>
+@endsection
 
-        .title {
-            font-size: 84px;
-        }
-
-        .links > a {
-            color: #636b6f;
-            padding: 0 25px;
-            font-size: 13px;
-            font-weight: 600;
-            letter-spacing: .1rem;
-            text-decoration: none;
-            text-transform: uppercase;
-        }
-
-        .m-b-md {
-            margin-bottom: 30px;
-        }
-    </style>
-</head>
-<body>
-    <h1>Add new contact</h1>
-
-<a href="{{ route('contacts.index') }}">Back to all contacts</a>
-</body>
-</html>
+@section('title', 'Contact App | Add new contact')
