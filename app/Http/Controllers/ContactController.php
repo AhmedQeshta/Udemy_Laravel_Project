@@ -20,6 +20,9 @@ class ContactController extends Controller
             if ($companyId = request('company_id')) {
                 $query->where('company_id', $companyId);
             }
+            if ($search = request('search')) {
+                $query->where('first_name', 'LIKE', "%{$search}%");
+            }
         })->paginate(5);
 
         return view('contacts.index', compact('contacts', 'companies'));
