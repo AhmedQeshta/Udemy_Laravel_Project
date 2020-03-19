@@ -1,23 +1,13 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>index Contact</title>
-       <!-- Styles -->
-</head>
-<body>
+
     <div class="row">
             <div class="col-md-6"></div>
             <div class="col-md-6">
               <div class="row">
                 <div class="col">
-                  <select class="custom-select">
-                    <option value="" selected>All Companies</option>
-                    <option value="1">Company One</option>
-                    <option value="2">Company Two</option>
-                    <option value="3">Company Three</option>
+                  <select id="filter_company_id" name="company_id" class="custom-select">
+                    @foreach ($companies as $id => $name)
+                      <option {{ $id == request('company_id') ? 'selected' : '' }} value="{{ $id }}">{{ $name }}</option>                
+                    @endforeach
                   </select>
                 </div>
                 <div class="col">
@@ -36,5 +26,3 @@
               </div>
             </div>
         </div>
-</body>
-</html>
