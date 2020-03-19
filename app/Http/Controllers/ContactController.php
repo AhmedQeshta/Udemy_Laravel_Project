@@ -49,8 +49,9 @@ class ContactController extends Controller
         $request->validate([
             'first_name' => 'required',
             'last_name' => 'required',
-            'email' => 'required|email|',
+            'email' => 'required|email|unique:users',
             'address' => 'required',
+            'phone'=>   'required',
             'company_id' => 'required|exists:companies,id',
         ]);
             Contact::create($request->all());
@@ -100,7 +101,8 @@ class ContactController extends Controller
         $request->validate([
             'first_name' => 'required',
             'last_name' => 'required',
-            'email' => 'required|email',
+            'email' => 'required|email|unique:users',
+            'phone'=>   'required',
             'address' => 'required',
             'company_id' => 'required|exists:companies,id',
         ]);
@@ -120,6 +122,8 @@ class ContactController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $contact = Contact::findOrFail($id);
+        $contact->delete();
+        return back()->with('message', "Contact has been deleted successfully");
     }
 }
