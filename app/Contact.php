@@ -5,7 +5,7 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Scope;
 use App\Scopes\FilterScope;
-use App\Scopes\SearchScope;
+use App\Scopes\ContactSearchScope;
 
 class Contact extends Model
 {
@@ -17,6 +17,7 @@ class Contact extends Model
                 'address',
                 'company_id'
         ];
+        public $filterColumns = ['company_id'];
    
         public function company(){
                 return $this->belongsTo(Company::class);
@@ -30,7 +31,7 @@ class Contact extends Model
         {
                 parent::boot();
                 static::addGlobalScope(new FilterScope);
-                static::addGlobalScope(new SearchScope);
+                static::addGlobalScope(new ContactSearchScope);
         }
         
     
