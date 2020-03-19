@@ -16,17 +16,11 @@ class ContactController extends Controller
     public function index()
     {
         $companies = Company::orderBy('name')->pluck('name', 'id')->prepend('All Companies', '');
-        $contacts = Contact::orderBy('id', 'desc')->where(function ($query) {
-            if ($companyId = request('company_id')) {
-                $query->where('company_id', $companyId);
-            }
-            if ($search = request('search')) {
-                $query->where('first_name', 'LIKE', "%{$search}%");
-            }
-        })->paginate(5);
+        $contacts = Contact::latestFirst()->filter()->paginate(5);
 
+        
         return view('contacts.index', compact('contacts', 'companies'));
-    }
+    }    
 
     /**
      * Show the form for creating a new resource.
