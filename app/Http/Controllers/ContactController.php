@@ -16,9 +16,11 @@ class ContactController extends Controller
     public function index()
     {
         $companies = Company::orderBy('name')->pluck('name', 'id')->prepend('All Companies', '');
-        $contacts = Contact::latestFirst()->filter()->paginate(5);
+        // $contacts = Contact::latestFirst()->filter()->paginate(5);
+        // \DB::enableQueryLog();
+         $contacts = Contact::latestFirst()->paginate(5);
+         // dd(\DB::getQueryLog());
 
-        
         return view('contacts.index', compact('contacts', 'companies'));
     }    
 
