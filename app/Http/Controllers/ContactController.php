@@ -32,8 +32,9 @@ class ContactController extends Controller
      */
     public function create()
     {
+        $contact = new Contact();
         $companies = Company::orderBy('name')->pluck('name', 'id')->prepend('All Companies', '');
-        return view('contacts.create', compact('companies'));
+        return view('contacts.create', compact('companies', 'contact'));
     }
 
     /**
@@ -48,7 +49,7 @@ class ContactController extends Controller
         $request->validate([
             'first_name' => 'required',
             'last_name' => 'required',
-            'email' => 'required|email',
+            'email' => 'required|email|',
             'address' => 'required',
             'company_id' => 'required|exists:companies,id',
         ]);
@@ -68,7 +69,7 @@ class ContactController extends Controller
      */
     public function show($id)
     {
-        $contact = Contact::find($id);
+        $contact = Contact::findOrFail($id);
         return view('contacts.show', compact('contact'));
     }
 
@@ -80,9 +81,13 @@ class ContactController extends Controller
      */
     public function edit($id)
     {
-        //
+        $contact = Contact::findOrFail($id);
+        $companies = Company::orderBy('name')->pluck('name', 'id')->prepend('All Companies', '');
+
+        return view('contacts.edit', compact('companies', 'contact'));
     }
 
+    
     /**
      * Update the specified resource in storage.
      *
@@ -90,10 +95,22 @@ class ContactController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update($id, Request $request)
     {
-        //
+        $request->validate([
+            'first_name' => 'required',
+            'last_name' => 'required',
+            'email' => 'required|email',
+            'address' => 'required',
+            'company_id' => 'required|exists:companies,id',
+        ]);
+
+        $contact = Contact::findOrFail($id);
+        $contact->update($request->all());
+
+        return redirect()->route('contacts.index')->with('message', "Contact has been updated successfully");
     }
+
 
     /**
      * Remove the specified resource from storage.

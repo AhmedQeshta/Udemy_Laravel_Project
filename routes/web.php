@@ -21,3 +21,5 @@ Route::get('/contacts/create', 'ContactController@create')->name('contacts.creat
 Route::post('/contacts', 'ContactController@store')->name('contacts.store');
 Route::get('/contacts/{id}', 'ContactController@show')->name('contacts.show');
 
+Route::put('/contacts/{id}', 'ContactController@update')->name('contacts.update');
+Route::get('/contacts/{id}/edit', 'ContactController@edit')->name('contacts.edit');
