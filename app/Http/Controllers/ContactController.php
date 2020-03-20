@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Contact;
 use App\Company;
+use App\Http\Requests\ContactRequest;
 
 class ContactController extends Controller
 {
@@ -25,10 +26,9 @@ class ContactController extends Controller
      */
     public function index()
     {
-        $user = auth()->user();
-        $companies = $user->companies()->orderBy('name')->pluck('name', 'id')->prepend('All Companies', '');
-        $contacts = $user->contacts()->latestFirst()->paginate(5);
-         
+        $companies = Company::userCompanies();
+
+        $contacts = auth()->user()->contacts()->latestFirst()->paginate(5);
 
         return view('contacts.index', compact('contacts', 'companies'));
     }    
@@ -42,8 +42,8 @@ class ContactController extends Controller
     {
         $contact = new Contact();
         // $companies = auth()->user()->companies()->orderBy('name')->pluck('name', 'id')->prepend('All Companies', '2');
-        $companies = Company::orderBy('name')->pluck('name', 'id')->prepend('All Companies', '');
-
+        // $companies = Company::orderBy('name')->pluck('name', 'id')->prepend('All Companies', '');
+        $companies = Company::userCompanies();
         return view('contacts.create', compact('companies', 'contact'));
     }
 
@@ -53,7 +53,7 @@ class ContactController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(ContactRequest $request)
     {
         // dd($request->except('first_name', 'last_name'));
         $request->validate([
@@ -62,7 +62,7 @@ class ContactController extends Controller
             'email' => 'required|email',
             'address' => 'required',
             'phone'=>   'required',
-            'company_id' => 'required|exists:companies,id',
+            'company_id' => 'bail|required|exists:companies,id',
         ]);
             $request->user()->contacts()->create($request->all());
          
@@ -94,7 +94,7 @@ class ContactController extends Controller
     public function edit($id)
     {
         $contact = Contact::findOrFail($id);
-        $companies = auth()->user()->companies()->orderBy('name')->pluck('name', 'id')->prepend('All Companies', '');
+        $companies = Company::userCompanies();
 
         return view('contacts.edit', compact('companies', 'contact'));
     }
@@ -107,7 +107,7 @@ class ContactController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update($id, Request $request)
+    public function update($id, ContactRequest $request)
     {
         $request->validate([
             'first_name' => 'required',
@@ -115,7 +115,7 @@ class ContactController extends Controller
             'email' => 'required|email|unique:users',
             'phone'=>   'required',
             'address' => 'required',
-            'company_id' => 'required|exists:companies,id',
+            'company_id' => 'bail|required|exists:companies,id',
         ]);
 
         $contact = Contact::findOrFail($id);
