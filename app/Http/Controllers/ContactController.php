@@ -25,11 +25,10 @@ class ContactController extends Controller
      */
     public function index()
     {
-        $companies = Company::orderBy('name')->pluck('name', 'id')->prepend('All Companies', '');
-        // $contacts = Contact::latestFirst()->filter()->paginate(5);
-        // \DB::enableQueryLog();
-         $contacts = Contact::latestFirst()->paginate(5);
-         // dd(\DB::getQueryLog());
+        $user = auth()->user();
+        $companies = $user->companies()->orderBy('name')->pluck('name', 'id')->prepend('All Companies', '');
+        $contacts = $user->contacts()->latestFirst()->paginate(5);
+         
 
         return view('contacts.index', compact('contacts', 'companies'));
     }    
@@ -42,7 +41,9 @@ class ContactController extends Controller
     public function create()
     {
         $contact = new Contact();
+        // $companies = auth()->user()->companies()->orderBy('name')->pluck('name', 'id')->prepend('All Companies', '2');
         $companies = Company::orderBy('name')->pluck('name', 'id')->prepend('All Companies', '');
+
         return view('contacts.create', compact('companies', 'contact'));
     }
 
@@ -58,13 +59,14 @@ class ContactController extends Controller
         $request->validate([
             'first_name' => 'required',
             'last_name' => 'required',
-            'email' => 'required|email|unique:users',
+            'email' => 'required|email',
             'address' => 'required',
             'phone'=>   'required',
             'company_id' => 'required|exists:companies,id',
         ]);
-            Contact::create($request->all());
-                    return redirect()->route('contacts.index')->with('message', "Contact has been added successfully");
+            $request->user()->contacts()->create($request->all());
+         
+            return redirect()->route('contacts.index')->with('message', "Contact has been added successfully");
     }
              
                 
@@ -92,7 +94,7 @@ class ContactController extends Controller
     public function edit($id)
     {
         $contact = Contact::findOrFail($id);
-        $companies = Company::orderBy('name')->pluck('name', 'id')->prepend('All Companies', '');
+        $companies = auth()->user()->companies()->orderBy('name')->pluck('name', 'id')->prepend('All Companies', '');
 
         return view('contacts.edit', compact('companies', 'contact'));
     }

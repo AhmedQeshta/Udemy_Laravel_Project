@@ -13,10 +13,14 @@ class Company extends Model
         'website'
     ];
 
-    public function contacts()
-        {
-            return $this->hasMany(Contact::class);
-        }
+    public function contacts(){
+        return $this->hasMany(Contact::class);
+    }
+
+    public function user(){
+        return $this->belongsTo(User::class);
+    }
+
 }
 
 

@@ -27,3 +27,4 @@ Route::get('/contacts/{id}/edit', 'ContactController@edit')->name('contacts.edit
 
 Auth::routes(['verify' => true]);
 Route::get('/dashboard', 'HomeController@index')->name('dashboard');
+Route::get('/settings/account', 'Settings\AccountController@index')->name('settings.account');
