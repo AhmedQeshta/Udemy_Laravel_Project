@@ -25,5 +25,5 @@ Route::delete('/contacts/{id}', 'ContactController@destroy')->name('contacts.des
 Route::get('/contacts/{id}/edit', 'ContactController@edit')->name('contacts.edit');
 
 
-Auth::routes();
+Auth::routes(['verify' => true]);
 Route::get('/dashboard', 'HomeController@index')->name('dashboard');
