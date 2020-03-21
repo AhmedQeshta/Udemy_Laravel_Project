@@ -18,6 +18,7 @@
                       <p class="form-control-plaintext text-muted">{{ $contact->first_name }}</p>
                     </div>
                   </div>
+
                   <div class="form-group row">
                     <label for="last_name" class="col-md-3 col-form-label">Last Name</label>
                     <div class="col-md-9">
@@ -55,10 +56,10 @@
                   <div class="form-group row mb-0">
                     <div class="col-md-9 offset-md-3">
                         <a href="{{ route('contacts.edit', $contact->id) }}" class="btn btn-info">Edit</a>
-                        {{-- <a href="{{ route('contacts.destroy', $contact->id) }}" class="btn btn-outline-danger">Delete</a> --}}
-                        {{-- <a href="{{ route('contacts.destroy', $contact->id) }}" class="btn-delete btn btn-outline-danger" title="Delete">Delete</a> --}}
+                        <a href="{{ route('contacts.destroy', $contact->id) }}" class="btn-delete btn btn-outline-danger">Delete</a>
                         <a href="{{ route('contacts.index') }}" class="btn btn-outline-secondary">Cancel</a>
                     </div>
+                    @include('layouts._delete-form')
                   </div>
                 </div>
               </div>
