@@ -14,6 +14,14 @@ class AccountController extends Controller
 
     public function index()
     {
-        return "<h1>Account Settings</h1>";
+        return view('ProfileSettings.settings');;
     }
+
+    public function update(Contact $contact, ContactRequest $request)
+    {
+        $contact->update($request->all());
+
+        return redirect()->route('contacts.index')->with('message', "Contact has been updated successfully");
+    }
+
 }
